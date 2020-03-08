@@ -4,7 +4,7 @@ from matplotlib import animation
 
 
 def affichagede9iterations(init,  funciteration):
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(7, 5))
     for i in range(10):
         if i == 0:
             plt.subplot(2, 5, 1)
@@ -13,51 +13,23 @@ def affichagede9iterations(init,  funciteration):
             plt.subplot(2,  5,  i+1)
             plt.imshow(funciteration(init))
         plt.title("itération" + " " + str(i))
+        plt.suptitle("Affichage des 9 premières itérations du jeu")
 
+# Configurations stables
 
-def animer(mat):
-    fig = plt.gcf()
-    im = plt.imshow(mat)
-    plt.show()
+S1 = np.zeros((50, 50))
+S1[25, 24] = S1[24, 24] = S1[24, 25] = S1[25, 26] = \
+S1[25, 27] = S1[25, 27] = S1[24, 27] = 1  # serpent
 
-    def animate(frame):
-        im.set_data(iteration_jeu_np(mat))
-        return im,
+S2 = np.zeros((50, 50))
+S2[26, 24] = S2[25, 25] = S2[24, 26] = S2[25, 27] = \
+S2[26,27] = S2[27, 26] = S2[27, 25] = 1  # mie de pain
 
-    ani = animation.FuncAnimation(fig,  animate,  frames=200)
+S3 = np.zeros((50, 50))
+S3[25, 24] = S3[26, 24] = S3[26, 25] = \
+S3[25, 26] = S3[24, 25] = 1  # bateau
 
-    return(ani)
+# Configuration oscillante
 
-
-def animer_tore(mat):
-    fig = plt.gcf()
-    im = plt.imshow(mat)
-    plt.show()
-
-    def animate(frame):
-        im.set_data(iteration_jeu_np(mat))
-        return im,
-
-    ani = animation.FuncAnimation(fig,  animate,  frames=200)
-
-    return(ani)
-
-
-def iteration_jeu_np(Z):
-    forme = Z.shape
-    N = calcul_nb_voisins_np(Z)
-    for x in range(1,  forme[0] - 1):
-        for y in range(1,  forme[1] - 1):
-            if Z[x][y] == 1 and (N[x][y] < 2 or N[x][y] > 3):
-                Z[x][y] = 0  # la cellule meurt
-            elif Z[x][y] == 0 and N[x][y] == 3:
-                Z[x][y] = 1  # la cellule nait
-    return(Z)
-
-
-def calcul_nb_voisins_np(Z):
-    nb_voisins = np.zeros(Z.shape)
-    nb_voisins[1:-1,  1:-1] = Z[:-2, :-2] + Z[1:-1, :-2] + Z[2:, :-2] + \
-        Z[:-2, 1:-1] + Z[2:, 1:-1] + \
-        Z[:-2, 2:] + Z[1:-1, 2:] + Z[2:, 2:]
-    return(nb_voisins)
+O = np.zeros((50, 50))
+O[25, 24] = O[25, 25] = O[25, 26] = 1  # clignotant
