@@ -3,15 +3,15 @@ import numpy as np
 from matplotlib import animation
 
 
-def affichagede9iterations(init,  funciteration):
+def affichagede9iterations(mat, iteration):
     plt.figure(figsize=(7, 5))
     for i in range(10):
         if i == 0:
             plt.subplot(2, 5, 1)
-            plt.imshow(init)
+            plt.imshow(mat)
         else:
             plt.subplot(2,  5,  i+1)
-            plt.imshow(funciteration(init))
+            plt.imshow(iteration(mat))
         plt.title("itération" + " " + str(i))
         plt.suptitle("Affichage des 9 premières itérations du jeu")
 
